@@ -6,7 +6,8 @@ import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import logo from '../assets/images/logo.svg';
+import logoLight from '../assets/images/logo-lightmode.svg';
+import logoDark from '../assets/images/logo-darkmode.svg';
 import { getThemeColors } from '../theme';
 
 const Logo = styled('img')`
@@ -171,7 +172,7 @@ const Sidebar = () => {
       <CssBaseline />
       <SidebarContainer theme={theme}>
         <Link to="/homepage">
-          <Logo src={logo} alt="Company Logo" />
+          <Logo src={theme.palette.mode === 'dark' ? logoDark : logoLight} alt="Company Logo" />
         </Link>
         <SidebarContent>
           {menuItems.map((item, index) => (
