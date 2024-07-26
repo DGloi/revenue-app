@@ -18,6 +18,22 @@ jobs:
         with:
           python-version: 3.11
 
+      - name: Cache Poetry packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      - name: Cache Python packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         working-directory: backend/src
         run: |
@@ -26,10 +42,12 @@ jobs:
           poetry install
 
       - name: Run Black formatting
+        working-directory: backend/src
         run: |
           poetry run black --check .
 
       - name: Run PEP8 check
+        working-directory: backend/src
         run: |
           poetry run flake8 .
 
@@ -44,9 +62,18 @@ jobs:
         with:
           node-version: '14'
 
+      - name: Cache npm packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
         working-directory: frontend
-        run: npm install
+        run: |
+          npm ci
 
       - name: Run frontend tests
         working-directory: frontend
