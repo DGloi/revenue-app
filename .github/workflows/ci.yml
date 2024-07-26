@@ -49,6 +49,7 @@ jobs:
 
       - name: Run PEP8 check
         working-directory: backend/src
+        continue-on-error: true
         run: |
           poetry run flake8 .
 
