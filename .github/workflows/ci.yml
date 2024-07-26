@@ -1,0 +1,102 @@
+name: CI Workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Cache Poetry packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      - name: Cache Python packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        working-directory: backend/src
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry install
+
+      - name: Run Black formatting
+        working-directory: backend/src
+        run: |
+          poetry run black --check .
+
+      - name: Run PEP8 check
+        working-directory: backend/src
+        run: |
+          poetry run flake8 .
+
+  frontend-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '21.7.3'  # Ensure this matches your local version
+
+      - name: Install npm 10.5.0
+        run: |
+          npm install -g npm@10.5.0
+
+      - name: Cache npm packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Output package.json and package-lock.json before npm ci
+        working-directory: frontend
+        run: |
+          echo "package.json:"
+          cat package.json
+          echo "package-lock.json:"
+          cat package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: |
+          npm ci
+
+      - name: Output package-lock.json after npm ci
+        working-directory: frontend
+        run: |
+          echo "package-lock.json after npm ci:"
+          cat package-lock.json
+
+      - name: Print npm debug log
+        if: failure()
+        run: cat /home/runner/.npm/_logs/*.log
+
+      - name: Run frontend tests
+        working-directory: frontend
+        run: npm test

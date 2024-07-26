@@ -1,0 +1,58 @@
+{
+    "name": "frontend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "eject": "react-scripts eject",
+        "test": "jest",
+        "test:watch": "jest --watch"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.13.0",
+        "@emotion/styled": "^11.13.0",
+        "@heroicons/react": "^2.1.1",
+        "@mui/icons-material": "^5.16.0",
+        "@mui/material": "^5.16.0",
+        "axios": "^1.7.2",
+        "primeflex": "^3.3.1",
+        "primeicons": "^7.0.0",
+        "primereact": "^10.7.0",
+        "react": "^18.2.0",
+        "react-bootstrap": "^2.10.1",
+        "react-datepicker": "^7.3.0",
+        "react-dnd": "^16.0.1",
+        "react-dnd-html5-backend": "^16.0.1",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.22.3",
+        "react-scripts": "^5.0.1",
+        "react-table": "^7.8.0"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+        "@babel/preset-env": "^7.24.7",
+        "@babel/preset-react": "^7.24.7",
+        "@testing-library/jest-dom": "^6.4.6",
+        "@testing-library/react": "^16.0.0",
+        "babel-jest": "^29.7.0",
+        "identity-obj-proxy": "^3.0.0",
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0",
+        "jest-transform-stub": "^2.0.0",
+        "react-test-renderer": "^18.3.1"
+    }
+}
