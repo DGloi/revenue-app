@@ -1,8 +1,9 @@
 from django.db import models
 
+
 # Create your models here.
 class EventPayment(models.Model):
-    id = models.AutoField(primary_key=True),
+    id = (models.AutoField(primary_key=True),)
     id_payment_gateway_reference = models.CharField(max_length=255)
     id_transaction = models.CharField(max_length=255)
     id_product = models.CharField(max_length=255)
@@ -29,10 +30,11 @@ class EventPayment(models.Model):
     meta_report_timezone = models.CharField(max_length=255)
 
     def __str__(self):
-        return  f"Event Payment record id : {self.id}, gateway id : {self.id_payment_gateway_reference}"
-    
-class EventRefund(models.Model) :
-    id = models.AutoField(primary_key=True),
+        return f"Event Payment record id : {self.id}, gateway id : {self.id_payment_gateway_reference}"
+
+
+class EventRefund(models.Model):
+    id = (models.AutoField(primary_key=True),)
     id_payment_gateway_reference = models.CharField(max_length=255)
     id_refunded_transaction = models.CharField(max_length=255)
     id_product = models.CharField(max_length=255)
@@ -57,6 +59,6 @@ class EventRefund(models.Model) :
     meta_tax_origin = models.CharField(max_length=255)
     meta_payment_method = models.CharField(max_length=255)
     meta_report_timezone = models.CharField(max_length=255)
-    
+
     def __str__(self):
-        return  f"Event Refund record id : {self.id}, gateway id : {self.id_payment_gateway_reference}"
+        return f"Event Refund record id : {self.id}, gateway id : {self.id_payment_gateway_reference}"
