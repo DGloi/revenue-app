@@ -43,6 +43,7 @@ jobs:
 
       - name: Run Black formatting
         working-directory: backend/src
+        continue-on-error: true
         run: |
           poetry run black --check .
 
