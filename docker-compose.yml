@@ -14,19 +14,40 @@ services:
     build: ./backend/src
     command: sh -c "ls -la /app && poetry run python manage.py migrate && poetry run python manage.py loaddata payment/fixtures/sample_data.json && poetry run python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - ./src:/app
+      - ./backend/src:/app
     ports:
-      - "8000:8000"
+      - "8080:8000"
     depends_on:
       - db
+    env_file:
+      - ./backend/.env
     environment:
       - DATABASE_URL=${DATABASE_URL}
+
+  backend-tests:
+    build:
+      context: ./backend/src
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/src:/app
+    command: >
+      sh -c "poetry run black --check . &&
+             poetry run flake8 ."
+
   
   frontend:
     build: ./frontend
     command: sh -c "npm install && npm start"
     ports:
       - "3000:3000"
+
+  frontend-tests:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    command: npm test
 
 volumes:
   postgres_data:
