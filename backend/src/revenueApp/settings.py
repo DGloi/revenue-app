@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +26,7 @@ SECRET_KEY = "django-insecure--s(uixvey$t1_41h*_b=jfz)bweq6_=5tfg)ujgvwf0j@zgwv5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
 
 # Application definition
 
@@ -74,8 +75,8 @@ WSGI_APPLICATION = "revenueApp.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://admin:password@localhost:5432/revenuedb'
+    "default": dj_database_url.config(
+        default="postgres://admin:password@localhost:5432/revenuedb"
     )
 }
 
