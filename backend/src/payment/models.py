@@ -59,6 +59,28 @@ class EventRefund(models.Model):
     meta_tax_origin = models.CharField(max_length=255)
     meta_payment_method = models.CharField(max_length=255)
     meta_report_timezone = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return f"Event Refund record id : {self.id}, gateway id : {self.id_payment_gateway_reference}"
+class EventSettlements(models.Model):
+    id_payment_lifecycle = models.CharField(max_length=255, unique=True, help_text="Unique fingerprint to identify a transaction at a particular stage of the payment lifecycle")
+    id_payment_gateway_reference = models.CharField(max_length=255, help_text="Unique identifier issued by the payment gateway to identify the transaction")
+    id_modification_reference = models.CharField(max_length=255, help_text="Identifier for the modification reference")
+    id_settlement_batch = models.CharField(max_length=255, help_text="PSP identifier for the settlement batch")
+    country = models.CharField(max_length=2, help_text="Country code where the card was issued")
+    type_payment = models.CharField(max_length=50, help_text="The payment method used for the transaction. For example: visa, mc, amex")
+    date_settlement = models.DateTimeField(help_text="Timestamp indicating when the payment was marked as settled by the PSP")
+    type = models.CharField(max_length=50, help_text="The accounting record type")
+    currency_gross = models.CharField(max_length=3, help_text="The three-character ISO currency code for the user-settlement currency")
+    amount_gross = models.FloatField(help_text="Amount as specified by sender, before processing fees and eventual currency change")
+    currency_net = models.CharField(max_length=3, help_text="The three-character ISO currency code for the psp-settlement currency")
+    amount_net = models.FloatField(help_text="Amount after fees and eventual currency change")
+    name_payment_gateway = models.CharField(max_length=255, help_text="Name of the payment gateway")
+    meta_report_timezone = models.CharField(max_length=255, help_text="The timezone used by the PSP for reporting")
+
+    def __str__(self):
+        return self.id_payment_lifecycle
+
 
     def __str__(self):
         return f"Event Refund record id : {self.id}, gateway id : {self.id_payment_gateway_reference}"
