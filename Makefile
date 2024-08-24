@@ -32,7 +32,12 @@ up:
 down:
 	docker-compose down
 
-# Run backend tests
+# Run only backend 
+backend-up:
+	docker-compose run --rm backend
+
+backend-down:
+	docker-compose down backend
 backend-test:
 	docker-compose run --rm backend-tests
 

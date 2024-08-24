@@ -12,7 +12,15 @@ services:
 
   backend:
     build: ./backend/src
-    command: sh -c "ls -la /app && poetry run python manage.py migrate && poetry run python manage.py loaddata payment/fixtures/sample_data.json && poetry run python manage.py runserver 0.0.0.0:8000"
+    command: >
+      sh -c "
+      ls -la /app &&
+      poetry run python manage.py makemigrations --no-input &&
+      poetry run python manage.py migrate --no-input &&
+      poetry run python manage.py loaddata payment/fixtures/sample_data.json &&
+      poetry run python manage.py shell < /app/management/create_superuser.py &&
+      poetry run python manage.py runserver 0.0.0.0:8000
+      "
     volumes:
       - ./backend/src:/app
     ports:
@@ -34,7 +42,6 @@ services:
       sh -c "poetry run black --check . &&
              poetry run flake8 ."
 
-  
   frontend:
     build: ./frontend
     command: sh -c "npm install && npm start"

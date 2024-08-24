@@ -62,7 +62,7 @@ class EventRefund(models.Model):
     
     def __str__(self):
         return f"Event Refund record id : {self.id}, gateway id : {self.id_payment_gateway_reference}"
-class EventSettlements(models.Model):
+class EventSettlement(models.Model):
     id_payment_lifecycle = models.CharField(max_length=255, unique=True, help_text="Unique fingerprint to identify a transaction at a particular stage of the payment lifecycle")
     id_payment_gateway_reference = models.CharField(max_length=255, help_text="Unique identifier issued by the payment gateway to identify the transaction")
     id_modification_reference = models.CharField(max_length=255, help_text="Identifier for the modification reference")

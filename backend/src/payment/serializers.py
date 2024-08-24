@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import EventPayment, EventRefund
+from .models import EventPayment, EventRefund, EventSettlement
 
 class EventPaymentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,4 +9,9 @@ class EventPaymentSerializer(serializers.ModelSerializer):
 class EventRefundSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventRefund
+        fields = '__all__'
+
+class EventSettlementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventSettlement
         fields = '__all__'
